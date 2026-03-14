@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Innovation Case Studies — {{ report.company }} — {{ report.market }}</title>
+<style>
+  @page { size: A4; margin: 2cm 2cm 2.5cm 2cm; @bottom-right { content: "Page " counter(page) " of " counter(pages); font-size: 8pt; color: #64748b; } }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Georgia', serif; font-size: 10pt; color: #1e293b; line-height: 1.6; }
+  .cover { page-break-after: always; display: flex; flex-direction: column; justify-content: center; min-height: 25cm; }
+  .cover-label { font-family: Arial, sans-serif; font-size: 9pt; letter-spacing: 0.15em; text-transform: uppercase; color: #f59e0b; margin-bottom: 1cm; }
+  .cover-title { font-size: 28pt; font-weight: bold; color: #0f172a; margin-bottom: 0.5cm; }
+  .cover-subtitle { font-size: 14pt; color: #334155; margin-bottom: 2cm; }
+  .cover-meta { font-family: Arial, sans-serif; font-size: 9pt; color: #64748b; border-top: 1px solid #e2e8f0; padding-top: 0.5cm; }
+  .narrative { border-left: 3px solid #0f172a; padding: 0.4cm 0.5cm; background: #f8fafc; margin-bottom: 0.5cm; font-size: 10pt; color: #334155; }
+  .case-block { page-break-before: always; }
+  .case-header { background: #0f172a; color: white; padding: 0.5cm; margin-bottom: 0.5cm; }
+  .case-number { font-family: Arial, sans-serif; font-size: 8pt; color: #f59e0b; letter-spacing: 0.1em; text-transform: uppercase; }
+  .case-title { font-size: 16pt; font-weight: bold; margin: 0.2cm 0 0.1cm; }
+  .case-meta { font-family: Arial, sans-serif; font-size: 8pt; color: #94a3b8; }
+  h2 { font-family: Arial, sans-serif; font-size: 10pt; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.1em; margin: 0.6cm 0 0.3cm; border-bottom: 1px solid #e2e8f0; padding-bottom: 2pt; }
+  p { margin-bottom: 0.3cm; }
+  ul { margin: 0.2cm 0 0.3cm 1cm; }
+  li { margin-bottom: 0.15cm; }
+  .relevance-box { background: #fffbeb; border: 1px solid #f59e0b; border-left: 4px solid #f59e0b; padding: 0.4cm; margin: 0.4cm 0; }
+  .relevance-title { font-family: Arial, sans-serif; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.1em; color: #f59e0b; margin-bottom: 0.2cm; }
+  .takeaway-item { background: #f8fafc; border-left: 2px solid #0284c7; padding: 0.2cm 0.4cm; margin: 0.15cm 0; }
+  .impact-grid { display: table; width: 100%; margin: 0.3cm 0; }
+  .impact-cell { display: table-cell; width: 33%; vertical-align: top; padding-right: 0.4cm; }
+  .impact-label { font-family: Arial, sans-serif; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; margin-bottom: 0.1cm; }
+  .metrics-item { background: #f0fdf4; border-left: 2px solid #059669; padding: 0.2cm 0.4cm; margin: 0.1cm 0; }
+  .badge { font-family: Arial, sans-serif; font-size: 7pt; padding: 1pt 5pt; border-radius: 10pt; display: inline-block; margin-left: 0.2cm; }
+  .badge-technology { background: #e0f2fe; color: #0c4a6e; }
+  .badge-business-model { background: #fef9c3; color: #713f12; }
+  .badge-operations { background: #f0fdf4; color: #14532d; }
+  .badge-customer { background: #fdf4ff; color: #6b21a8; }
+  .badge-esg { background: #f0fdf4; color: #166534; }
+  .badge-emerging { background: #fef9c3; color: #92400e; }
+  .badge-scaling { background: #e0f2fe; color: #075985; }
+  .badge-mainstream { background: #f0fdf4; color: #14532d; }
+  .divider { border-top: 1px solid #e2e8f0; margin: 0.4cm 0; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-label">Innovation Case Studies</div>
+  <div class="cover-title">{{ report.market }}</div>
+  <div class="cover-subtitle">Five Innovation Case Studies for {{ report.company }}</div>
+  <div class="cover-meta">
+    Analysis Period: {{ report.time_period_months }} months &nbsp;|&nbsp; Generated: {{ report.generated_at[:10] }}<br>
+    Five curated innovations — Technology · Business Model · Operations · Customer · ESG
+  </div>
+</div>
+
+<!-- INTRODUCTION -->
+<div class="narrative">{{ report.report_narrative }}</div>
+
+<!-- CASE STUDIES -->
+{% for cs in report.case_studies %}
+<div class="case-block">
+  <div class="case-header">
+    <div class="case-number">Case Study {{ cs.number }} of {{ report.case_studies | length }}</div>
+    <div class="case-title">
+      {{ cs.title }}
+      <span class="badge badge-{{ cs.innovation_type | lower | replace(' ', '-') }}">{{ cs.innovation_type }}</span>
+      <span class="badge badge-{{ cs.maturity_level | lower }}">{{ cs.maturity_level }}</span>
+    </div>
+    <div class="case-meta">Lead Example: {{ cs.lead_company }}</div>
+  </div>
+
+  <h2>1. Innovation Overview</h2>
+  <p>{{ cs.innovation_description }}</p>
+  <p><strong>Problem Solved:</strong> {{ cs.problem_solved }}</p>
+  <p><strong>Where Emerging:</strong> {{ cs.where_emerging }}</p>
+
+  <div class="divider"></div>
+  <h2>2. Example in Practice — {{ cs.lead_company }}</h2>
+  <p>{{ cs.implementation_description }}</p>
+  {% if cs.metrics_outcomes %}
+  <p><strong>Notable Outcomes:</strong></p>
+  {% for metric in cs.metrics_outcomes %}
+  <div class="metrics-item">{{ metric }}</div>
+  {% endfor %}
+  {% endif %}
+
+  <div class="divider"></div>
+  <h2>3. Impact on the Industry</h2>
+  <div class="impact-grid">
+    <div class="impact-cell">
+      <div class="impact-label">Customer Impact</div>
+      <p>{{ cs.customer_impact }}</p>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-label">Business Performance</div>
+      <p>{{ cs.business_performance_impact }}</p>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-label">Competitive Dynamics</div>
+      <p>{{ cs.competitive_dynamics_impact }}</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <h2>4. Key Takeaways</h2>
+  {% for takeaway in cs.key_takeaways %}
+  <div class="takeaway-item">{{ takeaway }}</div>
+  {% endfor %}
+
+  <div class="divider"></div>
+  <div class="relevance-box">
+    <div class="relevance-title">5. Relevance for {{ report.company }}</div>
+    <p>{{ cs.client_relevance }}</p>
+    {% if cs.potential_opportunity %}<p><strong>Opportunity:</strong> {{ cs.potential_opportunity }}</p>{% endif %}
+  </div>
+</div>
+{% endfor %}
+
+<!-- SOURCES -->
+{% if report.all_sources %}
+<div style="page-break-before: always;">
+  <h2>Sources</h2>
+  {% for i, src in enumerate(report.all_sources[:30], 1) %}
+  <p style="font-size:7pt; margin-bottom:0.1cm">[{{ i }}] {{ src.title }} — {{ src.url[:80] }} ({{ src.published_date[:10] if src.published_date else "n.d." }})</p>
+  {% endfor %}
+</div>
+{% endif %}
+
+</body>
+</html>

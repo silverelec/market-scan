@@ -1,0 +1,39 @@
+# Environment & secrets
+.env
+.env.local
+credentials.json
+token.json
+
+# Temporary files
+.tmp/*
+!.tmp/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Misc
+skills-lock.json

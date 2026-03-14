@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-stone-50 text-stone-900 antialiased;
+  }
+}
+
+@layer components {
+  .section-card {
+    @apply bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden;
+  }
+  .section-header {
+    @apply px-6 py-4 border-b border-stone-200 bg-stone-100;
+  }
+  .section-title {
+    @apply text-sm font-semibold text-stone-500 uppercase tracking-wider;
+  }
+  .section-body {
+    @apply p-6;
+  }
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .badge-high {
+    @apply badge bg-red-100 text-red-700;
+  }
+  .badge-medium {
+    @apply badge bg-amber-100 text-amber-700;
+  }
+  .badge-low {
+    @apply badge bg-green-100 text-green-700;
+  }
+  .badge-neutral {
+    @apply badge bg-stone-200 text-stone-600;
+  }
+  .badge-leader {
+    @apply badge bg-stone-100 text-stone-700;
+  }
+  .table-base {
+    @apply w-full text-sm;
+  }
+  .table-base th {
+    @apply text-left px-4 py-2 font-semibold text-stone-500 bg-stone-100 border-b border-stone-200 text-xs uppercase tracking-wide;
+  }
+  .table-base td {
+    @apply px-4 py-3 border-b border-stone-100 text-stone-800;
+  }
+  .table-base tr:last-child td {
+    @apply border-b-0;
+  }
+  .bullet-list {
+    @apply space-y-1.5;
+  }
+  .bullet-list li {
+    @apply flex items-start gap-2 text-stone-800;
+  }
+  .bullet-list li::before {
+    content: '▸';
+    @apply text-bronze-500 mt-0.5 flex-shrink-0 text-xs;
+  }
+}

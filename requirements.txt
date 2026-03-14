@@ -1,0 +1,21 @@
+# ── Core framework ────────────────────────────────────────────────────────────
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+
+# ── AI / Research APIs ────────────────────────────────────────────────────────
+anthropic>=0.28.0
+tavily-python>=0.3.3
+exa-py>=1.1.0
+
+# ── Config & validation ───────────────────────────────────────────────────────
+pydantic>=2.7.0
+pydantic-settings>=2.3.0
+
+# ── PDF generation ────────────────────────────────────────────────────────────
+jinja2>=3.1.4
+xhtml2pdf>=0.2.16          # pure-Python PDF (no system deps — works on Windows)
+weasyprint>=62.0            # optional: better fidelity, requires GTK/Cairo/Pango
+pdfkit>=1.0.0               # optional: requires wkhtmltopdf system binary
+
+# ── Charts ────────────────────────────────────────────────────────────────────
+matplotlib>=3.9.0

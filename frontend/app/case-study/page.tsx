@@ -1,0 +1,95 @@
+'use client'
+
+import { useCallback, useState } from 'react'
+import ScanForm from '@/components/ScanForm'
+import JobProgress from '@/components/JobProgress'
+import PdfDownloadButton from '@/components/PdfDownloadButton'
+import CaseStudyReportView from '@/components/reports/CaseStudyReport'
+import { useJobPoller } from '@/hooks/useJobPoller'
+import { startCaseStudy, getCaseStudy, caseStudyPdfUrl } from '@/lib/api'
+import type { ScanRequest } from '@/lib/types'
+
+export default function CaseStudyPage() {
+  const [jobId, setJobId] = useState<string | null>(null)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+
+  const fetchFn = useCallback((id: string) => getCaseStudy(id), [])
+  const { job, fetchError } = useJobPoller(jobId, fetchFn)
+
+  async function handleSubmit(req: ScanRequest) {
+    setSubmitError(null)
+    setLoading(true)
+    try {
+      const j = await startCaseStudy(req)
+      setJobId(j.job_id)
+    } catch (e) {
+      setSubmitError(e instanceof Error ? e.message : 'Failed to start case study')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const isRunning = job && job.status !== 'complete' && job.status !== 'error'
+  const isComplete = job?.status === 'complete'
+  const isError = job?.status === 'error'
+
+  return (
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      <div>
+        <h1 className="font-display text-2xl font-bold text-navy-900">Innovation Case Studies</h1>
+        <p className="text-warm-500 text-sm mt-1">
+          5 curated innovation case studies from the market, with impact analysis and a tailored client relevance assessment.
+        </p>
+      </div>
+
+      {!isRunning && !isComplete && (
+        <div className="bg-white border border-blush-200 rounded-xl p-6">
+          <ScanForm
+            onSubmit={handleSubmit}
+            loading={loading}
+            submitLabel="Generate Case Studies"
+          />
+          {submitError && (
+            <p className="text-red-600 text-sm mt-3">{submitError}</p>
+          )}
+        </div>
+      )}
+
+      {(isComplete || isError) && (
+        <button
+          onClick={() => { setJobId(null); setSubmitError(null) }}
+          className="text-sm text-brand-600 hover:underline"
+        >
+          ← Generate new case studies
+        </button>
+      )}
+
+      {job && (isRunning || isError) && (
+        <JobProgress
+          message={job.progress_message}
+          pct={job.progress_pct}
+          status={job.status}
+        />
+      )}
+
+      {(isError || fetchError) && (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-5">
+          <p className="text-red-700 text-sm font-medium">
+            {job?.error || fetchError || 'An error occurred.'}
+          </p>
+        </div>
+      )}
+
+      {isComplete && job.report && (
+        <>
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-green-600 font-medium">Case studies complete</p>
+            <PdfDownloadButton href={caseStudyPdfUrl(jobId!)} label="Download PDF Report" />
+          </div>
+          <CaseStudyReportView r={job.report} />
+        </>
+      )}
+    </div>
+  )
+}
