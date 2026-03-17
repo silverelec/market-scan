@@ -461,8 +461,8 @@
 
 <h2>Recommended Priorities for {{ report.company }}</h2>
 <ul>
-  {% for i, priority in enumerate(report.strategic_opportunities.recommended_priorities, 1) %}
-  <li><strong>{{ i }}.</strong> {{ priority }}</li>
+  {% for priority in report.strategic_opportunities.recommended_priorities %}
+  <li><strong>{{ loop.index }}.</strong> {{ priority }}</li>
   {% endfor %}
 </ul>
 
@@ -472,9 +472,9 @@
 {% if report.all_sources %}
 <table>
   <tr><th>#</th><th>Title</th><th>Source</th><th>Published</th><th>URL</th></tr>
-  {% for i, src in enumerate(report.all_sources, 1) %}
+  {% for src in report.all_sources %}
   <tr>
-    <td>{{ i }}</td>
+    <td>{{ loop.index }}</td>
     <td style="font-size:8pt">{{ src.title[:60] }}</td>
     <td>{{ src.source }}</td>
     <td>{{ src.published_date[:10] if src.published_date else "—" }}</td>

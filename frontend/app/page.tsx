@@ -7,7 +7,7 @@ const features = [
     title: 'Market Scan',
     description:
       'Full-depth market intelligence covering sizing, structure, competitive landscape, customer segments, technology trends, geography, and strategic opportunities.',
-    cta: 'Run Market Scan',
+    cta: 'Start Market Scan',
   },
   {
     href: '/competitor',
@@ -15,7 +15,7 @@ const features = [
     title: 'Competitor Analysis',
     description:
       'Deep-dive profiles on every key competitor: business model, GTM motion, financials, strengths, weaknesses, benchmarking matrices, and strategic recommendations.',
-    cta: 'Analyse Competitors',
+    cta: 'Start Competitor Analysis',
   },
   {
     href: '/case-study',
@@ -23,7 +23,7 @@ const features = [
     title: 'Innovation Case Studies',
     description:
       '5 curated innovation case studies from the market, with impact analysis, measurable outcomes, and a tailored relevance assessment for your client.',
-    cta: 'Generate Case Studies',
+    cta: 'Start Case Studies',
   },
 ]
 

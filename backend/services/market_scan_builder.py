@@ -98,6 +98,9 @@ async def _claude_json(
     sem: asyncio.Semaphore,
 ) -> dict:
     """Call Claude and parse JSON response."""
+    import re
+    from json_repair import repair_json
+
     settings = get_settings()
     async with sem:
         response = await client.messages.create(
@@ -106,20 +109,21 @@ async def _claude_json(
             messages=[{"role": "user", "content": prompt}],
         )
     text = response.content[0].text.strip()
-    # Strip markdown code fences if present
-    if text.startswith("```"):
-        text = text.split("```")[1]
-        if text.startswith("json"):
-            text = text[4:]
+    # Strip markdown code fences using regex (handles nested backticks safely)
+    fence_match = re.match(r'^```(?:json)?\s*([\s\S]*?)\s*```$', text)
+    if fence_match:
+        text = fence_match.group(1)
     try:
         return json.loads(text)
-    except json.JSONDecodeError:
-        # Try to extract JSON from the text
-        import re
-        match = re.search(r'\{[\s\S]*\}', text)
-        if match:
-            return json.loads(match.group())
-        logger.warning(f"Could not parse JSON from Claude response: {text[:200]}")
+    except json.JSONDecodeError as e:
+        logger.warning(f"JSON parse failed ({e}), attempting repair...")
+        try:
+            repaired = repair_json(text, return_objects=True)
+            if isinstance(repaired, dict):
+                return repaired
+        except Exception:
+            pass
+        logger.error(f"Could not parse JSON from Claude response: {text[:500]}")
         return {}
 
 
@@ -564,7 +568,8 @@ Return ONLY valid JSON:
   }}
 }}
 
-Be specific to {company}'s context. Focus on "so what" — actionable insights, not generic observations."""
+Be specific to {company}'s context. Focus on "so what" — actionable insights, not generic observations.
+Write any acronyms with their full form on first mention (e.g. "Artificial Intelligence (AI)", "Compound Annual Growth Rate (CAGR)")."""
     data = await _claude_json(client, prompt, sem)
 
     strat_data = data.get("strategic_opportunities", {})

@@ -7,6 +7,9 @@ anthropic>=0.28.0
 tavily-python>=0.3.3
 exa-py>=1.1.0
 
+# ── JSON repair (for malformed LLM responses) ─────────────────────────────────
+json-repair>=0.30.0
+
 # ── Config & validation ───────────────────────────────────────────────────────
 pydantic>=2.7.0
 pydantic-settings>=2.3.0

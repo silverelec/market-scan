@@ -37,9 +37,12 @@ def _html_to_pdf(html: str) -> bytes:
         from xhtml2pdf import pisa
         buf = io.BytesIO()
         result = pisa.CreatePDF(html.encode("utf-8"), dest=buf, encoding="utf-8")
-        if not result.err:
-            return buf.getvalue()
-        logger.warning(f"xhtml2pdf reported errors, trying pdfkit")
+        pdf_bytes = buf.getvalue()
+        if pdf_bytes:
+            if result.err:
+                logger.warning(f"xhtml2pdf produced PDF with {result.err} warning(s)")
+            return pdf_bytes
+        logger.warning("xhtml2pdf produced empty output, trying pdfkit")
     except ImportError:
         logger.warning("xhtml2pdf not available, trying pdfkit")
     except Exception as e:

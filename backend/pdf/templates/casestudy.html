@@ -120,8 +120,8 @@
 {% if report.all_sources %}
 <div style="page-break-before: always;">
   <h2>Sources</h2>
-  {% for i, src in enumerate(report.all_sources[:30], 1) %}
-  <p style="font-size:7pt; margin-bottom:0.1cm">[{{ i }}] {{ src.title }} — {{ src.url[:80] }} ({{ src.published_date[:10] if src.published_date else "n.d." }})</p>
+  {% for src in report.all_sources[:30] %}
+  <p style="font-size:7pt; margin-bottom:0.1cm">[{{ loop.index }}] {{ src.title }} — {{ src.url[:80] }} ({{ src.published_date[:10] if src.published_date else "n.d." }})</p>
   {% endfor %}
 </div>
 {% endif %}

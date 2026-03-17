@@ -49,7 +49,7 @@ export default function CompetitorPage() {
             onSubmit={handleSubmit}
             loading={loading}
             showCompetitors
-            submitLabel="Analyse Competitors"
+            submitLabel="Start Competitor Analysis"
           />
           {submitError && (
             <p className="text-red-600 text-sm mt-3">{submitError}</p>

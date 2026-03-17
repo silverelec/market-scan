@@ -50,7 +50,7 @@ export default function MarketScanPage() {
           <ScanForm
             onSubmit={handleSubmit}
             loading={loading}
-            submitLabel="Run Market Scan"
+            submitLabel="Start Market Scan"
           />
           {submitError && (
             <p className="text-red-600 text-sm mt-3">{submitError}</p>

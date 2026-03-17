@@ -28,6 +28,7 @@ export default function MarketScanReportView({ r }: { r: MarketScanReport }) {
       </div>
 
       {/* ── Exec Summary ── */}
+      {(r.exec_summary_bullets?.length > 0 || r.key_insights?.length > 0 || r.implications) && (
       <SectionCard title="Executive Summary" icon="📋">
         <div className="space-y-4">
           {r.exec_summary_bullets?.length > 0 && (
@@ -51,8 +52,10 @@ export default function MarketScanReportView({ r }: { r: MarketScanReport }) {
           )}
         </div>
       </SectionCard>
+      )}
 
       {/* ── Market Definition ── */}
+      {r.market_definition && (
       <SectionCard title="Market Definition" icon="🗺️">
         <div className="space-y-4">
           {r.market_definition?.industry_definition && (
@@ -94,8 +97,10 @@ export default function MarketScanReportView({ r }: { r: MarketScanReport }) {
           )}
         </div>
       </SectionCard>
+      )}
 
       {/* ── Market Size ── */}
+      {r.market_size && (
       <SectionCard title="Market Size & Growth" icon="📈">
         <div className="space-y-5">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -154,8 +159,10 @@ export default function MarketScanReportView({ r }: { r: MarketScanReport }) {
           </div>
         </div>
       </SectionCard>
+      )}
 
       {/* ── Market Structure ── */}
+      {r.market_structure && (
       <SectionCard title="Market Structure" icon="🏗️">
         <div className="space-y-5">
           {r.market_structure?.value_chain?.length > 0 && (
@@ -224,8 +231,10 @@ export default function MarketScanReportView({ r }: { r: MarketScanReport }) {
           </div>
         </div>
       </SectionCard>
+      )}
 
       {/* ── Competitive Landscape ── */}
+      {r.competitive_landscape && (
       <SectionCard title="Competitive Landscape" icon="⚔️">
         <div className="space-y-5">
           {r.competitive_landscape?.overview_narrative && (
@@ -275,8 +284,10 @@ export default function MarketScanReportView({ r }: { r: MarketScanReport }) {
           </div>
         </div>
       </SectionCard>
+      )}
 
       {/* ── Customer Analysis ── */}
+      {r.customer_analysis && (
       <SectionCard title="Customer Analysis" icon="👥">
         <div className="space-y-5">
           {r.customer_analysis?.segments?.length > 0 && (
@@ -331,8 +342,10 @@ export default function MarketScanReportView({ r }: { r: MarketScanReport }) {
           </div>
         </div>
       </SectionCard>
+      )}
 
       {/* ── Technology Trends ── */}
+      {r.tech_trends && (
       <SectionCard title="Technology Trends" icon="⚡">
         <div className="space-y-5">
           {r.tech_trends?.disruptive_technologies?.length > 0 && (
@@ -391,8 +404,10 @@ export default function MarketScanReportView({ r }: { r: MarketScanReport }) {
           )}
         </div>
       </SectionCard>
+      )}
 
       {/* ── Regulatory & External ── */}
+      {r.regulatory && (
       <SectionCard title="Regulatory & External Factors" icon="⚖️">
         <div className="space-y-5">
           {r.regulatory?.regulations?.length > 0 && (
@@ -447,8 +462,10 @@ export default function MarketScanReportView({ r }: { r: MarketScanReport }) {
           )}
         </div>
       </SectionCard>
+      )}
 
       {/* ── Geographic ── */}
+      {r.geographic && (
       <SectionCard title="Geographic Landscape" icon="🌍">
         <div className="space-y-5">
           {r.geographic?.regions?.length > 0 && (
@@ -490,8 +507,10 @@ export default function MarketScanReportView({ r }: { r: MarketScanReport }) {
           )}
         </div>
       </SectionCard>
+      )}
 
       {/* ── Investment & M&A ── */}
+      {r.investment_ma && (
       <SectionCard title="Investment & M&A" icon="💰">
         <div className="space-y-5">
           {r.investment_ma?.recent_deals?.length > 0 && (
@@ -534,34 +553,34 @@ export default function MarketScanReportView({ r }: { r: MarketScanReport }) {
           </div>
         </div>
       </SectionCard>
+      )}
 
       {/* ── Risks ── */}
+      {r.risks?.length > 0 && (
       <SectionCard title="Risk Register" icon="⚠️">
-        {r.risks?.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="table-base">
-              <thead>
-                <tr><th>Category</th><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr>
-              </thead>
-              <tbody>
-                {r.risks.map((risk, i) => (
-                  <tr key={i}>
-                    <td><span className="text-xs font-medium text-slate-600">{risk.category}</span></td>
-                    <td className="font-medium">{risk.risk}</td>
-                    <td><Badge value={risk.likelihood} /></td>
-                    <td><Badge value={risk.impact} /></td>
-                    <td className="text-xs text-slate-500">{risk.mitigation}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <Empty />
-        )}
+        <div className="overflow-x-auto">
+          <table className="table-base">
+            <thead>
+              <tr><th>Category</th><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr>
+            </thead>
+            <tbody>
+              {r.risks.map((risk, i) => (
+                <tr key={i}>
+                  <td><span className="text-xs font-medium text-slate-600">{risk.category}</span></td>
+                  <td className="font-medium">{risk.risk}</td>
+                  <td><Badge value={risk.likelihood} /></td>
+                  <td><Badge value={risk.impact} /></td>
+                  <td className="text-xs text-slate-500">{risk.mitigation}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </SectionCard>
+      )}
 
       {/* ── Strategic Opportunities ── */}
+      {r.strategic_opportunities && (
       <SectionCard title="Strategic Opportunities" icon="🎯">
         <div className="space-y-5">
           {r.strategic_opportunities?.recommended_priorities?.length > 0 && (
@@ -603,6 +622,7 @@ export default function MarketScanReportView({ r }: { r: MarketScanReport }) {
           </div>
         </div>
       </SectionCard>
+      )}
 
       {/* ── Sources ── */}
       {r.all_sources?.length > 0 && (
@@ -676,9 +696,9 @@ function ImplicationsBox({
     <div className={`rounded-lg p-4 border ${colors[color]}`}>
       <h3 className={`text-xs font-semibold uppercase mb-2 ${titleColors[color]}`}>{label}</h3>
       {items?.length ? (
-        <ul className="space-y-1">
+        <ul className="bullet-list">
           {items.map((item, i) => (
-            <li key={i} className="text-xs text-slate-700">{item}</li>
+            <li key={i} className="text-xs">{item}</li>
           ))}
         </ul>
       ) : (

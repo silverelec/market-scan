@@ -48,7 +48,7 @@ export default function CaseStudyPage() {
           <ScanForm
             onSubmit={handleSubmit}
             loading={loading}
-            submitLabel="Generate Case Studies"
+            submitLabel="Start Case Studies"
           />
           {submitError && (
             <p className="text-red-600 text-sm mt-3">{submitError}</p>

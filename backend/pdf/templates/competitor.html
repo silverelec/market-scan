@@ -298,8 +298,8 @@
 
 <h2>8.4 Strategic Priorities (3-5 Year)</h2>
 <ul>
-  {% for i, p in enumerate(report.strategic_priorities, 1) %}
-  <li><strong>{{ i }}.</strong> {{ p }}</li>
+  {% for p in report.strategic_priorities %}
+  <li><strong>{{ loop.index }}.</strong> {{ p }}</li>
   {% endfor %}
 </ul>
 

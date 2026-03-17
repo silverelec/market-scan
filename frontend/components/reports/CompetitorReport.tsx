@@ -29,6 +29,7 @@ export default function CompetitorReportView({ r }: { r: CompetitorReport }) {
       </div>
 
       {/* ── Executive Summary ── */}
+      {(r.purpose || r.key_findings?.length > 0 || r.strategic_implications?.length > 0) && (
       <SectionCard title="Executive Summary" icon="📋">
         <div className="space-y-4">
           {r.purpose && <p className="text-slate-700 text-sm leading-relaxed">{r.purpose}</p>}
@@ -48,8 +49,10 @@ export default function CompetitorReportView({ r }: { r: CompetitorReport }) {
           </div>
         </div>
       </SectionCard>
+      )}
 
       {/* ── Market Overview ── */}
+      {(r.industry_overview || r.competitive_landscape_overview) && (
       <SectionCard title="Market Overview" icon="🗺️">
         <div className="space-y-3">
           {r.industry_overview && (
@@ -60,6 +63,7 @@ export default function CompetitorReportView({ r }: { r: CompetitorReport }) {
           )}
         </div>
       </SectionCard>
+      )}
 
       {/* ── Competitor Deep-Dives ── */}
       {r.competitors?.length > 0 && (
@@ -74,6 +78,7 @@ export default function CompetitorReportView({ r }: { r: CompetitorReport }) {
       )}
 
       {/* ── Benchmarking ── */}
+      {r.benchmarking && (r.benchmarking.capability_benchmark?.length > 0 || r.benchmarking.market_share_comparison?.length > 0 || r.benchmarking.pricing_benchmark?.length > 0 || r.benchmarking.feature_matrix?.length > 0 || r.benchmarking.sentiment_benchmark?.length > 0) && (
       <SectionCard title="Benchmarking" icon="📊">
         <div className="space-y-6">
           {/* Capability Benchmark */}
@@ -211,8 +216,10 @@ export default function CompetitorReportView({ r }: { r: CompetitorReport }) {
           )}
         </div>
       </SectionCard>
+      )}
 
       {/* ── Cross-Competitor Analysis ── */}
+      {r.cross_competitor && (
       <SectionCard title="Cross-Competitor Analysis" icon="🔍">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {r.cross_competitor?.competitive_battlegrounds?.length > 0 && (
@@ -244,6 +251,7 @@ export default function CompetitorReportView({ r }: { r: CompetitorReport }) {
           <p className="text-sm text-slate-600 leading-relaxed mt-4">{r.cross_competitor.industry_investment_direction}</p>
         )}
       </SectionCard>
+      )}
 
       {/* ── White Spaces ── */}
       {r.white_spaces?.length > 0 && (
@@ -264,6 +272,7 @@ export default function CompetitorReportView({ r }: { r: CompetitorReport }) {
       )}
 
       {/* ── Strategic Implications ── */}
+      {(r.competitive_threats?.length > 0 || r.competitive_advantages?.length > 0 || r.strategic_risks?.length > 0) && (
       <SectionCard title="Strategic Implications" icon="⚔️">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {r.competitive_threats?.length > 0 && (
@@ -286,8 +295,10 @@ export default function CompetitorReportView({ r }: { r: CompetitorReport }) {
           )}
         </div>
       </SectionCard>
+      )}
 
       {/* ── Recommendations ── */}
+      {(r.strategic_priorities?.length > 0 || r.defend?.length > 0 || r.differentiate?.length > 0 || r.expand?.length > 0) && (
       <SectionCard title="Strategic Recommendations" icon="🎯">
         <div className="space-y-5">
           {r.strategic_priorities?.length > 0 && (
@@ -303,6 +314,7 @@ export default function CompetitorReportView({ r }: { r: CompetitorReport }) {
           </div>
         </div>
       </SectionCard>
+      )}
     </div>
   )
 }
